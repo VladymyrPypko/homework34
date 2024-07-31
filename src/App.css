@@ -1,0 +1,20 @@
+form {
+  display: flex;
+  gap: 10px;
+}
+
+input, 
+button {
+  padding: 8px;
+  border: 2px solid #eeeeea;
+  border-radius: 6px;
+  background-color: transparent;
+  color: #eeeeea;
+  transition: all .5s;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: #eeeeea;
+  color: #313a31;
+}
