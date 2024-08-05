@@ -1,19 +1,26 @@
-form {
+.wrapper {
   display: flex;
+  gap: 50px;
+}
+
+.wrapper form {
+  display: flex;
+  flex-direction: column;
   gap: 10px;
 }
 
-input, 
-button {
+.wrapper input[type="text"],
+.wrapper button[type="submit"] {
+  width: 150px;
   padding: 8px;
-  border: 2px solid #eeeeea;
-  border-radius: 6px;
   background-color: transparent;
+  border: 2px solid #eeeeea;
+  border-radius: 8px;
   color: #eeeeea;
-  transition: all .5s;
+  transition: .5s;
 }
 
-button:hover {
+.wrapper button[type="submit"]:hover {
   cursor: pointer;
   background-color: #eeeeea;
   color: #313a31;

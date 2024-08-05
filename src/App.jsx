@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import './App.css'
-import UserName from './components/UserName'
+import React, { useState } from 'react';
+import NoteList from './components/NoteList';
+import NoteItem from './components/NoteItem';
+import './App.css';
 
 const App = () => {
-    const [name, setName] = useState('');
+    const [notes, setNotes] = useState([]);
     const [inputValue, setInputValue] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setName(inputValue);
-    }
+        if (inputValue.trim().length) {
+            setNotes((prev) => [...prev, inputValue]);
+            setInputValue('');
+        }
+    };
 
-    const handleInputValue = (e) => {
+    const handleInput = (e) => {
         setInputValue(e.target.value);
-    }
+    };
+
+    const deleteNote = (index) => {
+        setNotes((prevNotes) => prevNotes.filter((_, i) => i !== index));
+    };
 
     return (
-        <div>
-            <UserName name={name} />
+        <div className='wrapper'>
             <form onSubmit={handleSubmit}>
                 <input
-                    type='text'
-                    name='name'
-                    placeholder='Введите имя'
-                    value={inputValue}
-                    onChange={handleInputValue}
+                type="text"
+                name="noteInput"
+                placeholder="Введите текст"
+                value={inputValue}
+                onChange={handleInput}
                 />
-                <button type="submit">Показать имя</button>
+                <button type="submit">Добавить</button>
             </form>
+            {notes.length === 0 ? (
+                <p>Заметок нет</p>
+            ) : (
+                <NoteList>
+                {notes.map((note, index) => (
+                    <NoteItem key={index} note={note} index={index} deleteNote={deleteNote} />
+                ))}
+                </NoteList>
+            )}
         </div>
     );
-}
+};
 
-export default App
+export default App;
