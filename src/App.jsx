@@ -1,27 +1,56 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import NoteList from './components/NoteList';
 import NoteItem from './components/NoteItem';
 import './App.css';
 
 const App = () => {
-    const [notes, setNotes] = useState([]);
-    const [inputValue, setInputValue] = useState('');
+    const [notes, setNotes] = useState(() => {
+        const savedNotes = localStorage.getItem('notes');
+
+        return savedNotes ? JSON.parse(savedNotes) : [];
+    });
+
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const inputRef = useRef(null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (inputValue.trim().length) {
-            setNotes((prev) => [...prev, inputValue]);
-            setInputValue('');
-        }
-    };
 
-    const handleInput = (e) => {
-        setInputValue(e.target.value);
+        const newNote = inputRef.current.value.trim();
+        if (newNote.length) {
+            setNotes((prev) => [...prev, newNote]);
+            inputRef.current.value = ''; // text field reset
+        }
     };
 
     const deleteNote = (index) => {
         setNotes((prevNotes) => prevNotes.filter((_, i) => i !== index));
     };
+
+    useEffect(() => {
+        localStorage.setItem('notes', JSON.stringify(notes));
+    }, [notes]);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const response = await fetch(`https://jsonplaceholder.typicode.com/users/1`);
+                if(!response.ok) {
+                    throw new Error('Something went wrong!');
+                }
+                const userData = await response.json();
+                setUser(userData);
+            } catch(error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchUser();
+    }, [])
+
 
     return (
         <div className='wrapper'>
@@ -30,18 +59,26 @@ const App = () => {
                 type="text"
                 name="noteInput"
                 placeholder="Введите текст"
-                value={inputValue}
-                onChange={handleInput}
+                ref={inputRef}
                 />
                 <button type="submit">Добавить</button>
             </form>
+
+            {loading ? (
+                <p className='user-loading'>Загрузка...</p>
+            ) : error ? (
+                <p className='user-error'>Что-то пошло не так</p>
+            ) : (
+                user && <p className='user-name'>Привет, {user.name}!</p>
+            )}
+
             {notes.length === 0 ? (
                 <p>Заметок нет</p>
             ) : (
                 <NoteList>
-                {notes.map((note, index) => (
-                    <NoteItem key={index} note={note} index={index} deleteNote={deleteNote} />
-                ))}
+                    {notes.map((note, index) => (
+                        <NoteItem key={index} note={note} index={index} deleteNote={deleteNote} />
+                    ))}
                 </NoteList>
             )}
         </div>

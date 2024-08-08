@@ -25,3 +25,14 @@
   background-color: #eeeeea;
   color: #313a31;
 }
+
+.wrapper .user-loading, 
+.wrapper .user-error, 
+.wrapper .user-name {
+  font-size: 1.5rem;
+  order: -1;
+}
+
+.wrapper .user-error {
+  color: red;
+}
