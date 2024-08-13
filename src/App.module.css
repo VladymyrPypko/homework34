@@ -3,14 +3,14 @@
   gap: 50px;
 }
 
-.wrapper form {
+.form {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.wrapper input[type="text"],
-.wrapper button[type="submit"] {
+.input,
+.btnSubmit {
   width: 150px;
   padding: 8px;
   background-color: transparent;
@@ -20,19 +20,19 @@
   transition: .5s;
 }
 
-.wrapper button[type="submit"]:hover {
+.btnSubmit:hover {
   cursor: pointer;
   background-color: #eeeeea;
   color: #313a31;
 }
 
-.wrapper .user-loading, 
-.wrapper .user-error, 
-.wrapper .user-name {
+.userLoading, 
+.userError, 
+.userName {
   font-size: 1.5rem;
   order: -1;
 }
 
-.wrapper .user-error {
+.userError {
   color: red;
 }

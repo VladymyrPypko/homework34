@@ -1,4 +1,4 @@
-.note-item {
+.item {
     display: flex;
     justify-content: space-between;
     /* align-items: center; */
@@ -7,14 +7,14 @@
     border-radius: 8px;
 }
 
-.note-item p {
+.itemText {
     display: block;
     width: 35ch;
     font-size: 1.2rem;
     line-height: 1.5;
 }
 
-.note-item button {
+.itemButton {
     position: relative;
     width: 20px;
     height: 20px;
@@ -22,11 +22,11 @@
     background-color: transparent;
 }
 
-.note-item button:hover span {
+.itemButton:hover span {
     animation: spanLeft .3s ease-out;
 }
 
-.note-item button:hover span::before {
+.itemButton:hover span::before {
     animation: spanRight .3s ease-out;
 }
 

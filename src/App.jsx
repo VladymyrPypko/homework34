@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import NoteList from './components/NoteList';
-import NoteItem from './components/NoteItem';
-import './App.css';
+import NoteList from './components/NoteList/NoteList';
+import NoteItem from './components/NoteItem/NoteItem';
+import styles from './App.module.css';
 
 const App = () => {
     const [notes, setNotes] = useState(() => {
@@ -53,29 +53,30 @@ const App = () => {
 
 
     return (
-        <div className='wrapper'>
-            <form onSubmit={handleSubmit}>
+        <div className={styles.wrapper}>
+            <form className={styles.form} onSubmit={handleSubmit}>
                 <input
+                className={styles.input}
                 type="text"
                 name="noteInput"
                 placeholder="Введите текст"
                 ref={inputRef}
                 />
-                <button type="submit">Добавить</button>
+                <button className={styles.btnSubmit} type="submit">Добавить</button>
             </form>
 
             {loading ? (
-                <p className='user-loading'>Загрузка...</p>
+                <p className={styles.userLoading}>Загрузка...</p>
             ) : error ? (
-                <p className='user-error'>Что-то пошло не так</p>
+                <p className={styles.userError}>Что-то пошло не так</p>
             ) : (
-                user && <p className='user-name'>Привет, {user.name}!</p>
+                user && <p className={styles.userName}>Привет, {user.name}!</p>
             )}
 
             {notes.length === 0 ? (
                 <p>Заметок нет</p>
             ) : (
-                <NoteList>
+                <NoteList title='Note list 123'>
                     {notes.map((note, index) => (
                         <NoteItem key={index} note={note} index={index} deleteNote={deleteNote} />
                     ))}
